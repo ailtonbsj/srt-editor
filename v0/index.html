@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SRT Editor Tool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300..600,0..1,-50..200" />
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="toolbar">
+  <button id="menuToggle" class="icon-btn" aria-label="Toggle navigation menu" aria-expanded="true">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+  <div class="toolbar-brand">
+    <span class="material-symbols-outlined brand-mark">subtitles</span>
+    <span class="app-title">SRT Editor Tool</span>
+  </div>
+  <div class="toolbar-spacer"></div>
+  <span class="toolbar-tag">for cleaner Text&#8209;to&#8209;Speech pacing</span>
+</header>
+
+<div class="app-body">
+
+  <nav id="sideNav" class="side-nav" aria-label="Primary">
+    <a href="#home" class="nav-item active" data-page="home">
+      <span class="material-symbols-outlined">home</span>
+      <span class="nav-label">Home</span>
+    </a>
+    <a href="#editor" class="nav-item" data-page="editor">
+      <span class="material-symbols-outlined">movie_edit</span>
+      <span class="nav-label">SRT Editor</span>
+    </a>
+    <div class="nav-divider"></div>
+    <div class="nav-hint">
+      <span class="material-symbols-outlined">keyboard</span>
+      <div>
+        <strong>Shortcuts</strong>
+        <ul>
+          <li><kbd>Alt</kbd>+<kbd>M</kbd> merge with next</li>
+          <li><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd> merge with previous</li>
+          <li><kbd>Alt</kbd>+<kbd>Del</kbd> remove cue</li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div id="scrim" class="scrim"></div>
+
+  <main id="mainContent" class="main-content">
+
+    <!-- HOME PAGE -->
+    <section id="page-home" class="page active">
+      <div class="jumbotron">
+        <div class="jumbotron-waveform" aria-hidden="true">
+          <svg viewBox="0 0 600 120" preserveAspectRatio="none">
+            <g class="wave-bars"></g>
+          </svg>
+        </div>
+        <div class="jumbotron-content">
+          <p class="eyebrow">Cue by cue, made speakable</p>
+          <h1>SRT Editor Tool</h1>
+          <p class="lede">Open a subtitle file, see exactly which cues will make a Text&#8209;to&#8211;Speech
+            voice race or stumble, and merge the choppy ones into lines a listener can actually follow.</p>
+          <button class="btn btn-primary" id="jumbotronCta">
+            <span class="material-symbols-outlined">upload_file</span>
+            Open the editor
+          </button>
+        </div>
+      </div>
+
+      <div class="home-grid">
+        <div class="info-card">
+          <span class="material-symbols-outlined">speed</span>
+          <h3>Pace, not just timing</h3>
+          <p>Every cue is scored in characters&nbsp;per&nbsp;second &mdash; the number that decides whether
+            a synthesized voice sounds natural or rushed.</p>
+        </div>
+        <div class="info-card">
+          <span class="material-symbols-outlined">call_merge</span>
+          <h3>Merge what's too tight</h3>
+          <p>Cues that are too short for their text are flagged so you can merge them with a neighbor
+            and give the voice room to breathe.</p>
+        </div>
+        <div class="info-card">
+          <span class="material-symbols-outlined">save</span>
+          <h3>Export when ready</h3>
+          <p>Save the edited cues back to a standard .srt file, renumbered and ready for your TTS pipeline.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDITOR PAGE -->
+    <section id="page-editor" class="page">
+
+      <div class="editor-toolbar">
+        <label class="btn btn-outline file-btn">
+          <span class="material-symbols-outlined">folder_open</span>
+          Open SRT file
+          <input type="file" id="fileInput" accept=".srt" hidden>
+        </label>
+        <span id="fileName" class="file-name"></span>
+        <div class="toolbar-spacer"></div>
+        <div class="legend" id="legend"></div>
+        <button class="btn btn-primary" id="saveBtn" disabled>
+          <span class="material-symbols-outlined">download</span>
+          Save SRT
+        </button>
+      </div>
+
+      <div id="editorEmpty" class="editor-empty">
+        <span class="material-symbols-outlined">subtitles_off</span>
+        <h2>No subtitle file loaded</h2>
+        <p>Open a .srt file to see its cues, their pacing, and merge options.</p>
+      </div>
+
+      <div id="cueListWrap" class="cue-list-wrap" hidden>
+        <div class="cue-summary" id="cueSummary"></div>
+        <div class="cue-list" id="cueList"></div>
+      </div>
+
+    </section>
+
+  </main>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
